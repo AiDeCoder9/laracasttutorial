@@ -71,10 +71,34 @@ class ProjectsTaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Task $task)
     {
-        $task = Task::findOrFail($id);
-        $task->update(['completed'=>request()->has('completed')]);
+        $task->complete(request()->has('completed'));
+
+        //$task = Task::findOrFail($id);
+        //$task->update(['completed'=>request()->has('completed')]);
+
+
+        //or
+
+        //request()->has('completed') ?'complete':'incomplete';
+
+        //or
+//        if(request()->has('completed')){
+//            $task->complete();
+//        }
+//        else{
+//            $task->incomplete();
+//        }
+
+
+        //or
+
+//        $method = request()->has('completed') ?'complete':'incomplete';
+//        $task->$method();
+//
+
+
         return back();
     }
 

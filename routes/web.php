@@ -11,7 +11,7 @@
 |
 */
 
-
+use App\Services\Twitter;
 //passing data with routes
 
 //Route::get('/', function () {
@@ -31,7 +31,9 @@
 
 //it can be done as
 
-Route::get('/',function(){
+Route::get('/',function(Twitter $twitter){
+
+    dd($twitter);
     return view('welcome')->with([
     'title' =>'Designs',
     'data' =>[
