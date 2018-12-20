@@ -55,3 +55,8 @@ Route::delete('/projects/{project}','ProjectsController@destroy');
 Route::resource('posts','PostController');
 
 
+Route::patch('/tasks/{task}','ProjectsTaskController@update');
+
+Route::post('/projects/{project}/task','ProjectsTaskController@store');
+
+
