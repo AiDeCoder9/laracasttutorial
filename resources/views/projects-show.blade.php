@@ -14,6 +14,10 @@
                     <div class="card-title">
                         <h5 class="text-capitalize text-primary">
                             {{$project->title}}
+
+                            @can('update',$project)
+                                <a href="" class="btn btn-primary d-block">You can update the page</a>
+                                @endcan
                         </h5>
                         <p>{{$project->description}}</p>
                         <a href="/projects/{{$project->id}}/edit">Edit</a>

@@ -62,3 +62,9 @@ Route::patch('/tasks/{task}','ProjectsTaskController@update');
 Route::post('/projects/{project}/task','ProjectsTaskController@store');
 
 
+
+Auth::routes();
+
+
+
+Route::get('/home', 'HomeController@index')->name('home');
