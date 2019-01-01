@@ -18,7 +18,9 @@ class ProjectsController extends Controller
     }
 
     public function index(){
-        $projects = Project::where('owner_id',auth()->id())->get();
+
+        $projects = auth()->user()->projects;
+        //$projects = Project::where('owner_id',auth()->id())->get(); to get detail of specific user
 
         //return view('projects')->with(['projects'=>$projects]);  OR
         return view('projects',compact('projects'));
@@ -31,17 +33,28 @@ class ProjectsController extends Controller
     public function store()
     {
 
-        $attributes = request()->validate([
-            'title'=>'required|min:5',
-            'description'=>'required|min:10'
-        ]);
+//        $attributes = request()->validate([
+//            'title'=>'required|min:5',
+//            'description'=>'required|min:10'
+//        ]);
+
+        //or
+
+        $attributes = $this->validateProject();
 
         $attributes['owner_id']=auth()->id();
         $project= Project::create($attributes);
 
-        \Mail::to('sajanproject@gmail.com')->send(
+//        \Mail::to('sajanproject@gmail.com')->send(
+//            new ProjectCreated($project)
+//        );
+
+        \Mail::to($project->owner->email)->send(
             new ProjectCreated($project)
         );
+
+
+        //ProjectCreated is a mail templated created by cmd :php artisan make:mail
 
         return redirect('/projects');
     }
@@ -59,10 +72,22 @@ class ProjectsController extends Controller
     }
 
     public function update(Project $project){
+
+
+
         $this->authorize('update',$project);
-        $project->update(request(['title','description']));
+        //$project->update(request(['title','description']));
+        $project->update($this->validateProject());
           return redirect('/projects');
     }
+
+    public function  validateProject(){
+        return request()->validate([
+            'title'=>'required|min:5',
+            'description'=>'required|min:10'
+        ]);
+    }
+
 
     public function show(Project $project){
         //abort_unless(auth()->user()->owns($project),403);

@@ -33,7 +33,6 @@ use App\Services\Twitter;
 
 Route::get('/',function(Twitter $twitter){
 
-    dd($twitter);
     return view('welcome')->with([
     'title' =>'Designs',
     'data' =>[

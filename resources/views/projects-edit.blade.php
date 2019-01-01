@@ -28,6 +28,8 @@
 
         </form>
 
+        @include('partials.error')
+
              <form action="/projects/{{$project->id}}" method="post">
                  {{method_field('delete')}}
                  @csrf
