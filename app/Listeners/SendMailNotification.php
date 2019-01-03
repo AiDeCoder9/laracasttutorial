@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Listeners;
+
+
+use App\Mail\ProjectCreated as ProjectMailCreated;
+use App\Events\ProjectCreated;
+use Illuminate\Support\Facades\Mail;
+
+
+class SendMailNotification
+{
+    /**
+     * Create the event listener.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param  ProjectCreated  $event
+     * @return void
+     */
+    public function handle(ProjectCreated $event)
+    {
+        //
+
+        Mail::to($event->project->owner->email)->send(
+            new ProjectMailCreated($event->project)
+        );
+
+    }
+}

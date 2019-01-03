@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Project;
 use App\User;
-use App\Mail\ProjectCreated;
+use App\Events\ProjectCreated;
+
 class ProjectsController extends Controller
 {
     //
@@ -45,13 +46,12 @@ class ProjectsController extends Controller
         $attributes['owner_id']=auth()->id();
         $project= Project::create($attributes);
 
+        event(new ProjectCreated($project));
+
 //        \Mail::to('sajanproject@gmail.com')->send(
 //            new ProjectCreated($project)
 //        );
 
-        \Mail::to($project->owner->email)->send(
-            new ProjectCreated($project)
-        );
 
 
         //ProjectCreated is a mail templated created by cmd :php artisan make:mail
