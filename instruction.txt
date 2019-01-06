@@ -1,0 +1,87 @@
+for notifications
+
+
+to create a notification
+
+php artisan make:notification SubscriptionRenewalFailed
+
+
+to get the methods that can be used into Notification or any kind of mail view these file
+
+SimpleMessage.php
+
+MailMessage.php
+
+
+to database specific notification we have to create a notification table
+
+php artisan notification:table
+
+
+notification table has a polymorphic relationship means the data can be accessed by each model it is created by
+
+for example if you are a admin and you send a SubscriptionRenewal verification then the notifiable_type = App\Admin
+Similary
+
+if you are a librarian and you send a SubscriptionRenewal verification then the notifiable_type = App\Librarian
+
+
+and you can access the data like
+
+$admin->notifications;
+or
+$admin->unreadNotications
+or
+$admin->notify()
+
+
+where $admin is instance of Admin Model
+
+
+
+known command
+$admin->markedAsRead()
+$admin->unreadNotifications()
+to specific id
+
+$admin->notifications->where('id',1)->markAsRead();
+
+
+to bundle the assets of webpack.config.json and to use extract() and version method
+
+
+
+//collection methods
+to view the available methods go to collections.php
+
+
+some of the example
+
+$user =App\User::all()
+
+$user = App\User;
+
+$user->find(4)
+$user->first();
+$user->last()
+
+$user ->where('email','sajan@gmail.com');
+$user ->where('email','sajan@gmail.com')->first()->name();
+$user->pluck('email');//gets all the user
+$user->pluck('email')->toArray();//covert to array
+
+$user->map(function($user){
+return $user->name});
+
+
+
+$user->filter(function ($user){return   $user->id >=3;});
+
+
+to make a collection of own
+
+collect(['data1','data3','data2']);
+
+
+
+

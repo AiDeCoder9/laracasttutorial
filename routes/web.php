@@ -11,6 +11,7 @@
 |
 */
 
+use App\Notifications\SubscriptionRenewalFailed;
 use App\Services\Twitter;
 //passing data with routes
 
@@ -67,3 +68,11 @@ Auth::routes();
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/sendnotifications',function(){
+   $user=App\User::first();
+   $user->notify(new SubScriptionRenewalFailed());
+   return 'notification send';
+});
+
+
